@@ -1,12 +1,15 @@
 library(plyr)
 library(tidyverse)
 library(ggplot2)
-library(voteR)
-library(haven)
+library(voteR) #devtools::install_github("schliebs/voteR")
 library(magrittr)
+#devtools::install_github("hadley/haven")
+library(extrafont)
 
-data <- foreign::read.spss(file = "data/offline/data_project_700861_2018_02_09 (1).sav") %>% as.data.frame()
+data <- haven::read_spss(file = "data/offline/data_project_700861_2018_02_09 (1).sav") %>% 
+  as.data.frame()
 names(data)
+data$v_7 <- data$v_7 %>% as.character()
 
 
 data %<>% within({
@@ -60,7 +63,11 @@ options(scipen = 999)
 
 #### Gewinner
 
-sub = data_prog %>% arrange(abs) %>% head(8) %>% .[-1,]
+data_prog$mail %<>% stringr::str_replace_all("@","(at)")
+
+sub = data_prog %>% arrange(abs) %>% head(8) %>% .[-1,] %>% mutate_at(vars(mail),
+                                                                      funs(as.character(.)))
+
 
 gggw <- 
   ggplot2::ggplot(data = sub) +
@@ -80,11 +87,11 @@ gggw <-
 
   ggplot2::scale_x_discrete(breaks = c("ZU mean",
                                        "ZU median",
-                                       "b.thies@zeppelin-university.net",
-                                       "j.meibert@zeppelin-university.net",
-                                       "m.wobith@zeppelin-university.net",
-                                       "p.truckenmueller@zeppelin-university.net",
-                                       "j.volkmann@zeppeln-university.net"),
+                                       "b.thies(at)zeppelin-university.net",
+                                       "j.meibert(at)zeppelin-university.net",
+                                       "m.wobith(at)zeppelin-university.net",
+                                       "p.truckenmueller(at)zeppelin-university.net",
+                                       "j.volkmann(at)zeppeln-university.net"),
                              labels = c("Mean ZU",
                                         "Median ZU",
                                         "Ben Thies",
@@ -134,11 +141,11 @@ gggw2 <-
   
   ggplot2::scale_x_discrete(breaks = c("ZU mean",
                                        "ZU median",
-                                       "b.thies@zeppelin-university.net",
-                                       "j.meibert@zeppelin-university.net",
-                                       "m.wobith@zeppelin-university.net",
-                                       "p.truckenmueller@zeppelin-university.net",
-                                       "j.volkmann@zeppeln-university.net"),
+                                       "b.thies(at)zeppelin-university.net",
+                                       "j.meibert(at)zeppelin-university.net",
+                                       "m.wobith(at)zeppelin-university.net",
+                                       "p.truckenmueller(at)zeppelin-university.net",
+                                       "j.volkmann(at)zeppeln-university.net"),
                             labels = c("Mean ZU",
                                        "Median ZU",
                                        "Ben Thies",

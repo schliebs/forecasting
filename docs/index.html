@@ -20,9 +20,6 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-1.1/highlight.js"></script>
@@ -165,101 +162,6 @@ $(document).ready(function () {
 
 
 
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
-
-
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -296,100 +198,221 @@ div.tocify {
 </div>
 
 
-<p>On the morning of the final day of the 2018 senate election [student represenatives elected into the most influential university board], Matej and I were sitting at the FAB Mensa, getting ready for a regular ZU-day (thus hanging around campus, a lot of coffee and long discussions voluntarily preventing you from work). Everything turned out quite different. Both passionate about elections, we started to send around fake polls for the election in some WhatsApp-Groups like it usually is the case during real elections when our party friends get the first exit polls a few hours early. But at some point, we thought? Why fake them as a joke if you can do real ones yourself? So thats what we did, using two different approaches that wil be described at length in the following paragraphs. If you have any questions, feel free to shoot us a message or <a href="twitter.com/ma_schliebs">tweet</a>. ***</p>
-<div id="two-forecasting-models" class="section level1">
-<h1>Two forecasting models</h1>
 <hr />
-<div id="survey-based-exit-poll" class="section level2">
-<h2>Survey-Based Exit-Poll</h2>
 <hr />
-</div>
-<div id="herd-forecast" class="section level2">
-<h2>Herd forecast</h2>
-<hr />
-</div>
-</div>
+<p>On the morning of the final day of the 2018 senate election [student represenatives elected into the most influential university board], Matej and I were sitting at the FAB Mensa, getting ready for a regular ZU-day (thus hanging around campus, a lot of coffee and long discussions voluntarily preventing you from work). Everything turned out quite different. Both passionate about elections, we started to send around fake polls for the election in some WhatsApp-Groups like it usually is the case during real elections when our party friends get the first exit polls a few hours early. But at some point, we thought? Why fake them as a joke if you can do real ones yourself? So thats what we did, using two different approaches that wil be described in detail in the following paragraphs. If you have any questions, feel free to shoot us a message or <a href="twitter.com/ma_schliebs">tweet</a>. ***</p>
 <div id="methodology" class="section level1">
-<h1>Methodology</h1>
+<h1><span class="header-section-number">1</span> Methodology</h1>
+<p>When we decided we wanted to give it a shot at forecasting, we intuitively started walking around in the FAB Mensa and asking people who they had casted their two votes for. After a few minutes however, we started to wonder: Are people walking around Uni at a carneval Friday (thus a rather empty FAB) really representative of the average ZU-ler? This is important since polling or sampling in general is based on the (often brave) assumption that every individual in the target population has an equal chance of being selected for the sample. In our case, there were several indicators that spoke against this. To give you one example, 7th and 5th semester candidates Moritz and Clemens probably have many friends who are abroad right now (and thus allowed to vote electronically but of course not walking through FAB).</p>
+<p>This when we had the idea to try out to give <em>wisdom of the crowd</em> a chance. The wisdom of the crowd is a phenomenon that recently has attracted some attention in forecasting and is based on the principle that collective judgements perform very well because they contain many individual judgements that cancel each other out. I actually discovered this phenomenon myself when I got lost on Lake Constance together with a friend a few years ago. “Lost” in that context actually meant that my sail boat’s engine broke with almost now wind in front of the harbour entrance of Romanshorn which is about 11-12 kilometers away from the SMH. Because it was already late, we started to wonder what time it was (smartly, we didn’t bring no watch or phone) and consequently if we would make it back home before darkness. Long story short, we didn’t. But what didn’t let me rest was the thought whether it would increase the accuracy of our time estimate if we averaged my friend’s and my individual time guesses instead of just taking one random judgement [not knowing who of us was the better guesser]. Say, for example, it really was 17.00 and her guess was 16.30. There are now two options:</p>
+<p><em>A) My estimate is 17.00 or earlier.</em><br />
+<em>B) My estimate is 17.00 or later.</em></p>
+<p>The expected guessing error <span class="math inline">\(g_{guess}\)</span> for asking a random person of us thus is: ***</p>
+<span class="math display" id="eq:1">\[\begin{equation}
+e_{random guess} = abs(\frac{1}{2} * (17.00-guess_1)   +  \frac{1}{2}*(17.00-guess_2))
+\tag{1.1}
+\end{equation}\]</span>
+<hr />
+<p>At the same time, averaging our guesses leads to: ***</p>
+<span class="math display" id="eq:2">\[\begin{equation}
+e_{averaged guess} = abs( 17.00 - (\frac{guess_1 + guess_2}{2}))
+\tag{1.2}
+\end{equation}\]</span>
+<hr />
+We can now rewrite <code>equation 1.1</code> as follows:
+<span class="math display" id="eq:3">\[\begin{equation}
+e_{random guess} = abs(\frac{17.00-guess_1 + 17.00 - guess_2}{2})
+\tag{1.3}
+\end{equation}\]</span>
+<hr />
+<p>If we look at equations <em>1.2.(averaged guess)</em> and <em>1.3(rewritten random guess)</em>, we can see that the two estimators are identical <strong>if and only if</strong> both guesses are off in the same direction (thus <span class="math inline">\(17.00-guess_1\)</span> and <span class="math inline">\(17.00-guess_2\)</span> have the same sign). If not equation 1.2 yields a lower guess error than 1.1/1.3.</p>
+<hr />
+<p>To illustrate this with our lake-lost-example, say my friend’s guess was 16.30 while it really is 17.00. If now I am off in the same direction and guess 16.50, both averaging and randomly selecting produce an (average) estimate of 16.40 and thus the average accuracy does not change at all.<br />
+If however, I was of in another direction and guessed 17.20, for example, a random guess of one of us would produce an average accuracy of <span class="math inline">\(0.5*30 min + 0.5 * 20 min = 25 min\)</span>, while averaging the guesses would produce an accuracy of $17.00 - ({16.30 + 17.20}{2}) $ =&gt; $17.00 - 16.55 = 5 min $.<br />
+We thus see that nothing changes if we are both off in the same direction but we gain a lot if we are off in opposite directions. So we can sometimes win but never lose, which definitely makes it a good bet. *** Last but not least, let’s look at this graphically:</p>
+<pre class="r"><code>library(tidyverse)
+library(ggplot2)
+library(hrbrthemes)
+
+her = (-20:20)/10
+data &lt;- data.frame(her = her,
+                   random = 0.5*abs(her) + 0.5 * 1,
+                   average = abs(her + 1)/2) %&gt;% 
+  gather(key = &quot;method&quot;,
+         value = &quot;value&quot;,
+         -her)
+
+ggplot(data = data) + 
+  geom_jitter(aes(x = her,
+                 y = value,
+                 col = method),
+              alpha = 0.7,
+              size = 1.5) + 
+  labs(x = &quot;Her guessing error divided by mine&quot;,
+       y = &quot;Expected error&quot;,
+       title = &quot;Wisdom of the crowd&quot;,
+       subtitle = &quot;Average is never more inaccurate&quot;) + 
+  theme_ipsum(grid = &quot;Y&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" width="672" /> We clearly see that whenever our guesses are off in the same direction, there is no difference between the methods. Whenever our guesses are off in the opposite direction however, the averaging (red) estimator clearly performs much better, with the best performance being located at wherever her forecast error is exactly -1* mine, which cancels out all error. *** As I later found out, this is of course no new thing that I discovered but had already been applied by Sir Francis Galton more than 100 years ago, when he accidently found out that while individual guesses in a competition in ox-weight-guessing were all widely off, the average of 800 guesses (1.207 pounds)missed the actual weight (1.198 pounds) by less than 1%!</p>
 <hr />
 </div>
-<div id="results" class="section level1">
-<h1>Results</h1>
+<div id="analysis-results" class="section level1">
+<h1><span class="header-section-number">2</span> Analysis &amp; Results</h1>
+<div id="data-loading-preparation" class="section level2">
+<h2><span class="header-section-number">2.1</span> Data Loading &amp; Preparation</h2>
+<pre class="r"><code>library(voteR) #devtools::install_github(&quot;schliebs/voteR&quot;)
+library(magrittr)
+library(extrafont)
+
+
+data &lt;- haven::read_spss(file = &quot;data/offline/data_project_700861_2018_02_09 (1).sav&quot;) %&gt;% as.data.frame()
+#names(data)
+
+data %&lt;&gt;% within({
+  
+  erst &lt;- car::recode(v_1,&#39;1 = &quot;Cannata&quot;; 2 = &quot;Horn&quot;; 3 = &quot;Troendle&quot;; 4 = &quot;Enthaltung&quot;; 5 = &quot;Nichtwahl&quot;&#39;)
+  zweit &lt;- car::recode(v_2,&#39;1 = &quot;Cannata&quot;; 2 = &quot;Horn&quot;; 3 = &quot;Troendle&quot;; 4 = &quot;Enthaltung&quot;; 5 = &quot;Nichtwahl&quot;&#39;)
+  cannata &lt;- v_3
+  troendle &lt;- v_4
+  horn &lt;- v_5
+  enthaltung &lt;- v_6
+  mail &lt;- v_7
+})
+
+data$id = 1:nrow(data)
+
+data_prog &lt;- 
+  data %&gt;% select(cannata,horn,troendle,enthaltung,mail) %&gt;% 
+  filter((cannata * horn * troendle) != 0)
+
+me = data_prog %&gt;% select(1:4)%&gt;% summarise_all(funs(mean(as.numeric(.),na.rm = TRUE))) ;me</code></pre>
+<pre><code>##    cannata    horn troendle enthaltung
+## 1 30.08333 25.9375 34.54167     9.4375</code></pre>
+<pre class="r"><code>med = data_prog %&gt;% select(1:4)%&gt;% summarise_all(funs(median(as.numeric(.),na.rm = TRUE))) ;med</code></pre>
+<pre><code>##   cannata horn troendle enthaltung
+## 1    30.5   25       35          5</code></pre>
+<pre class="r"><code>data_prog &lt;- 
+  data_prog %&gt;% 
+  bind_rows(data.frame(mail = &quot;ZU mean&quot;,me)) %&gt;% 
+  bind_rows(data.frame(mail = &quot;ZU median&quot;,med)) %&gt;% 
+  bind_rows(data.frame(mail = &quot;Ergebnis&quot;,cannata = 100*0.2976*0.92,horn = 100*0.2976*0.92,troendle = 100*0.4048*0.92,enthaltung = 100*0.08))
+
+resultsmatrix = matrix(rep(c(0.2976*0.92,0.2976*0.92,0.4048*0.92,0.08),nrow(data_prog)),ncol = 4,byrow = TRUE)
+x =(((data_prog[,1:4])/rowSums((data_prog[,1:4]))) - resultsmatrix)
+data_prog$sq = round(rowSums(abs((x*100)^2))/4,4)
+data_prog$abs = round(rowSums(abs((x*100)))/4,4)</code></pre>
+<pre class="r"><code>  ggplot(data_prog %&gt;% select(-enthaltung) %&gt;% gather(troendle,
+                                                      horn,
+                                                      cannata,
+                                                      key = &quot;candidate&quot;,
+                                                      value = &quot;value&quot;)) + 
+  geom_density(aes(x = value,color = candidate),size = 1.3) + 
+  geom_vline(xintercept = 27.3792,alpha = 1,col = &quot;red&quot;,linetype = &quot;twodash&quot;,size = 1.3)+
+  geom_vline(xintercept = 37.2416,col = &quot;blue&quot;,linetype = &quot;dotted&quot;,size = 1.3)+
+  geom_vline(xintercept = 27.3792,alpha = 0.5,col = &quot;green&quot;,linetype = &quot;dashed&quot;,size = 1.3)+
+  labs(x = &quot;Stimmanteil&quot;,
+       y = &quot;Häufigkeit&quot;,
+       title = &quot;Crowd-Forecast vs. Wahlergebnis&quot;,
+       subtitle = &quot;Tatsächliches Ergebnis als vertikale Linien&quot;,
+       caption = paste0(&quot;n = &quot;,nrow(data_prog))) + 
+  hrbrthemes::theme_ipsum(grid= &quot;X&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>#### Gewinner
+
+sub = data_prog %&gt;% arrange(abs) %&gt;% head(8) %&gt;% .[-1,]
+
+  ggplot2::ggplot(data = sub) +
+  ggplot2::geom_bar(aes(x = reorder(mail,abs),
+                        y = abs),
+                    stat = &quot;identity&quot;,
+                    alpha = 0.3,
+                    width = 0.8) + 
+  
+  ggplot2::geom_text(aes(x = reorder(mail,abs) ,
+                         y = abs + 0.2,
+                         label = paste0(round(abs,2))),
+                     stat = &quot;identity&quot;,
+                     #  hjust = 0.5,
+                     size = 5,
+                     alpha = 1.0) +
+
+  ggplot2::scale_x_discrete(breaks = c(&quot;ZU mean&quot;,
+                                       &quot;ZU median&quot;,
+                                       &quot;b.thies@zeppelin-university.net&quot;,
+                                       &quot;j.meibert@zeppelin-university.net&quot;,
+                                       &quot;m.wobith@zeppelin-university.net&quot;,
+                                       &quot;p.truckenmueller@zeppelin-university.net&quot;,
+                                       &quot;j.volkmann@zeppeln-university.net&quot;),
+                             labels = c(&quot;Mean ZU&quot;,
+                                        &quot;Median ZU&quot;,
+                                        &quot;Ben Thies&quot;,
+                                        &quot;Josephine Meibert&quot;,
+                                        &quot;M. Wobith&quot;,
+                                        &quot;Patricia Truckenmüller&quot;,
+                                        &quot;Johannes Volkmann&quot;))+
+  ggplot2::labs(x = NULL,
+                y = &quot;Abweichung&quot;,
+                title = &quot;Tippspielergebnis&quot;,
+                subtitle = &quot;Durchschnittliche Abweichung vom Endergebnis&quot;,
+                caption = NULL) +
+
+  hrbrthemes::theme_ipsum(grid = &quot;none&quot;)+
+  ggplot2::theme(legend.position = &quot;none&quot;,
+                 axis.text.x = element_text(angle = 90))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>  ######</code></pre>
+<pre class="r"><code>sub2 = data_prog %&gt;% arrange(abs) %&gt;% head(50) %&gt;% .[-1,] %&gt;% filter(mail != -99 &amp; mail != -66)
+
+  ggplot2::ggplot(data = sub2) +
+  ggplot2::geom_bar(aes(x = reorder(mail,abs),
+                        y = abs,
+                        fill = mail %in% c(&quot;ZU mean&quot;,&quot;ZU median&quot;)),
+                    stat = &quot;identity&quot;,
+                    alpha = 0.3,
+                    width = 0.8) + 
+  
+  # ggplot2::geom_text(aes(x = reorder(mail,abs) ,
+  #                        y = abs + 0.2,
+  #                        label = paste0(round(abs,2))),
+  #                    stat = &quot;identity&quot;,
+  #                    #  hjust = 0.5,
+  #                    size = 5,
+  #                    alpha = 1.0) +
+  
+  ggplot2::scale_x_discrete(breaks = c(&quot;ZU mean&quot;,
+                                       &quot;ZU median&quot;,
+                                       &quot;b.thies@zeppelin-university.net&quot;,
+                                       &quot;j.meibert@zeppelin-university.net&quot;,
+                                       &quot;m.wobith@zeppelin-university.net&quot;,
+                                       &quot;p.truckenmueller@zeppelin-university.net&quot;,
+                                       &quot;j.volkmann@zeppeln-university.net&quot;),
+                            labels = c(&quot;Mean ZU&quot;,
+                                       &quot;Median ZU&quot;,
+                                       &quot;Ben Thies&quot;,
+                                       &quot;Josephine Meibert&quot;,
+                                       &quot;M. Wobith&quot;,
+                                       &quot;Patricia Truckenmüller&quot;,
+                                       &quot;Johannes Volkmann&quot;))+
+  ggplot2::labs(x = NULL,
+                y = &quot;Abweichung&quot;,
+                title = &quot;Wisdom of the Crowd?&quot;,
+                subtitle = &quot;Durchschnittliche Abweichung vom Endergebnis&quot;,
+                caption = NULL) +
+  
+  hrbrthemes::theme_ipsum(grid = &quot;none&quot;)+
+  ggplot2::theme(legend.position = &quot;none&quot;,
+                 axis.text.x = element_text(angle = 90,
+                                            size = 10))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <hr />
 </div>
-<div id="indexing-and-data-structure" class="section level1">
-<h1>Indexing and Data Structure</h1>
-<hr />
-<p>We create a vector with electoral results</p>
-<pre class="r"><code>x &lt;- c(33,20.8,9,10,9,13)</code></pre>
-<p>And attribute party names to it</p>
-<pre class="r"><code>names(x) &lt;- c(&quot;CDU&quot;,&quot;SPD&quot;,&quot;GRUENE&quot;,&quot;FDP&quot;,&quot;LINKE&quot;,&quot;AFD&quot;)</code></pre>
-<p>Indexing by name</p>
-<pre class="r"><code>x[&quot;AFD&quot;]</code></pre>
-<pre><code>## AFD 
-##  13</code></pre>
-<p>Indexing by position</p>
-<pre class="r"><code>x[2]</code></pre>
-<pre><code>##  SPD 
-## 20.8</code></pre>
-<pre class="r"><code>x[1] - x[2]</code></pre>
-<pre><code>##  CDU 
-## 12.2</code></pre>
-<p>Select several elements</p>
-<pre class="r"><code>jamaika &lt;- x[c(1,3,4)]
-sum(jamaika)</code></pre>
-<pre><code>## [1] 52</code></pre>
-<p>Indexing through logical vector</p>
-<pre class="r"><code>sel &lt;- c(TRUE,TRUE,FALSE,FALSE,FALSE,FALSE)
-x[sel]</code></pre>
-<pre><code>##  CDU  SPD 
-## 33.0 20.8</code></pre>
-<p>Calculate logical vector</p>
-<pre class="r"><code>sel &lt;- x &gt; 20</code></pre>
-<p>And use for selection</p>
-<pre class="r"><code>x[sel]</code></pre>
-<pre><code>##  CDU  SPD 
-## 33.0 20.8</code></pre>
-<p>Overwrite elements</p>
-<pre class="r"><code>x[1] &lt;- x[1]-10
-x[2] &lt;- x[2]+10
-x</code></pre>
-<pre><code>##    CDU    SPD GRUENE    FDP  LINKE    AFD 
-##   23.0   30.8    9.0   10.0    9.0   13.0</code></pre>
-<p>FPD ? Not available any more…</p>
-<pre class="r"><code>x[4] &lt;- NA
-x</code></pre>
-<pre><code>##    CDU    SPD GRUENE    FDP  LINKE    AFD 
-##   23.0   30.8    9.0     NA    9.0   13.0</code></pre>
 </div>
-<div id="loading-packages" class="section level1">
-<h1>Loading Packages</h1>
-<p>Packages are collections of useful functions that fellow nerds wrote and put them online. One of the greatest benefits of R is its extremely rich framework of packages for every kind of use that you can imagine.</p>
-<p>At first, we need to load some packages. If you do not have them installed them yet, please do so <strong>once</strong>. You can install a package by running the command <code>install.packages(&quot;NAME&quot;)</code> in R.</p>
-<p>The most important packages we got to know during the semester were:</p>
-<p>Data management</p>
-<ul>
-<li><code>plyr</code>: Plyr is the older (and outdated) brother of tidyverse. We always need to load it once BEFORE (!) the latter in order to avoid nasty conflicts.</li>
-<li><code>tidyverse</code>: A very useful collection of tools for data-management.</li>
-<li><code>magrittr</code>: Gives us the beautiful Doppelpipe <code>%&lt;&gt;%</code></li>
-</ul>
-<p>Data Loading</p>
-<ul>
-<li><code>haven</code> enables us to nicely import .sav or .dta Datasets.</li>
-</ul>
-<p>Data Viz</p>
-<ul>
-<li><code>ggplot2</code> is the most beautiful shit ever</li>
-<li><code>ggthemes</code> and <code>hrbrthemes</code> make it even more brilliant</li>
-<li><code>extrafont</code> fixes a problem with fonts for outputting plots to pdf</li>
-<li><code>stargazer</code> gives us nice regression output tables</li>
-</ul>
+<div id="appendix-full-r-code" class="section level1">
+<h1><span class="header-section-number">3</span> Appendix: Full R-Code</h1>
 </div>
 
 
 
-</div>
-</div>
 
 </div>
 

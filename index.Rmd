@@ -2,7 +2,10 @@
 title: "Wisdom of the croud? - How the mean ZU-ler beat every other ZU-ler in Forecasting the senate winners"
 author: "Marcel Schliebs and Matej Peulic"
 date: "February 21st 2018"
-output: html_document
+output: 
+  bookdown::html_document2:
+      number_sections: true
+
 ---
 
 ```{r setup, include=FALSE}
@@ -17,117 +20,279 @@ knitr::opts_chunk$set(echo = TRUE)
 data <- foreign::read.spss(file = "data/offline/data_project_700861_2018_02_09 (1).sav") %>% as.data.frame()
 
 ```
-
+***
+***
 On the morning of the final day of the 2018 senate election [student represenatives elected into the most influential university board], Matej and I were sitting at the FAB Mensa, getting ready for a regular ZU-day (thus hanging around campus, a lot of coffee and long discussions voluntarily preventing you from work). Everything turned out quite different. Both passionate about elections, we started to send around fake polls for the election in some WhatsApp-Groups like it usually is the case during real elections when our party friends get the first exit polls a few hours early. 
-But at some point, we thought? Why fake them as a joke if you can do real ones yourself? So thats what we did, using two different approaches that wil be described at length in the following paragraphs. If you have any questions, feel free to shoot us a message or [tweet](twitter.com/ma_schliebs). 
-***
-
-# Two forecasting models
-
-***
-
-## Survey-Based Exit-Poll 
-
-***
-
-## Herd forecast 
-
+But at some point, we thought? Why fake them as a joke if you can do real ones yourself? So thats what we did, using two different approaches that wil be described in detail in the following paragraphs. If you have any questions, feel free to shoot us a message or [tweet](twitter.com/ma_schliebs). 
 ***
 
 # Methodology
 
+When we decided we wanted to give it a shot at forecasting, we intuitively started walking around in the FAB Mensa and asking people who they had casted their two votes for. After a few minutes however, we started to wonder: Are people walking around Uni at a carneval Friday (thus a rather empty FAB) really representative of the average ZU-ler? This is important since polling or sampling in general is based on the (often brave) assumption that every individual in the target population has an equal chance of being selected for the sample. In our case, there were several indicators that spoke against this. To give you one example, 7th and 5th semester candidates Moritz and Clemens probably have many friends who are abroad right now (and thus allowed to vote electronically but of course not walking through FAB). 
+
+This when we had the idea to try out to give *wisdom of the crowd* a chance. The wisdom of the crowd is a phenomenon that recently has attracted some attention in forecasting and is based on the principle that collective judgements perform very well because they contain many individual judgements that cancel each other out. I actually discovered this phenomenon myself when I got lost on Lake Constance together with a friend a few years ago. "Lost" in that context actually meant that my sail boat's engine broke with almost now wind in front of the harbour entrance of Romanshorn which is about 11-12 kilometers away from the SMH. Because it was already late, we started to wonder what time it was (smartly, we didn't bring no watch or phone) and consequently if we would make it back home before darkness. Long story short, we didn't. But what didn't let me rest was the thought whether it would increase the accuracy of our time estimate if we averaged my friend's and my individual time guesses instead of just taking one random judgement [not knowing who of us was the better guesser]. 
+Say, for example, it really was 17.00 and her guess was 16.30. There are now two options:
+
+*A) My estimate is 17.00 or earlier.*  
+*B) My estimate is 17.00 or later.*
+
+
+
+
+The expected guessing error $g_{guess}$ for asking a random person of us thus is: 
 ***
 
-# Results
+\begin{equation}
+e_{random guess} = abs(\frac{1}{2} * (17.00-guess_1)   +  \frac{1}{2}*(17.00-guess_2))
+(\#eq:1)
+\end{equation}
+
+***
+At the same time, averaging our guesses leads to: 
+***
+
+\begin{equation}
+e_{averaged guess} = abs( 17.00 - (\frac{guess_1 + guess_2}{2}))
+(\#eq:2)
+\end{equation}
 
 ***
 
-# Indexing and Data Structure
+We can now rewrite `equation 1.1` as follows:
+\begin{equation}
+e_{random guess} = abs(\frac{17.00-guess_1 + 17.00 - guess_2}{2})
+(\#eq:3)
+\end{equation}
+
+***
+If we look at equations *1.2.(averaged guess)* and *1.3(rewritten random guess)*, we can see that the two estimators are identical **if and only if** both guesses are off in the same direction (thus $17.00-guess_1$ and $17.00-guess_2$ have the same sign). If not equation 1.2 yields a lower guess error than 1.1/1.3. 
+
+***
+To illustrate this with our lake-lost-example, say my friend's guess was 16.30 while it really is 17.00. If now I am off in the same direction and guess 16.50, both averaging and randomly selecting produce an (average) estimate of 16.40 and thus the average accuracy does not change at all.  
+If however, I was of in another direction and guessed 17.20, for example, a random guess of one of us would produce an average accuracy of $0.5*30 min + 0.5 * 20 min = 25 min$, while averaging the guesses would produce an accuracy of $17.00 - ({16.30 + 17.20}{2}) $ => $17.00 - 16.55 = 5 min $.  
+We thus see that nothing changes if we are both off in the same direction but we gain a lot if we are off in opposite directions. So we can sometimes win but never lose, which definitely makes it a good bet. 
+***
+Last but not least, let's look at this graphically: 
+```{r,warning=F,message=F}
+library(tidyverse)
+library(ggplot2)
+library(hrbrthemes)
+
+her = (-20:20)/10
+data <- data.frame(her = her,
+                   random = 0.5*abs(her) + 0.5 * 1,
+                   average = abs(her + 1)/2) %>% 
+  gather(key = "method",
+         value = "value",
+         -her)
+
+ggplot(data = data) + 
+  geom_jitter(aes(x = her,
+                 y = value,
+                 col = method),
+              alpha = 0.7,
+              size = 1.5) + 
+  labs(x = "Her guessing error divided by mine",
+       y = "Expected error",
+       title = "Wisdom of the crowd",
+       subtitle = "Average is never more inaccurate") + 
+  theme_ipsum(grid = "Y")
+
+
+```
+We clearly see that whenever our guesses are off in the same direction, there is no difference between the methods. Whenever our guesses are off in the opposite direction however, the averaging (red) estimator clearly performs much better, with the best performance being located at wherever her forecast error is exactly -1* mine, which cancels out all error. 
+***
+As I later found out, this is of course no new thing that I discovered but had already been applied by Sir Francis Galton more than 100 years ago, when he accidently found out that while individual guesses in a competition in ox-weight-guessing were all widely off, the average of 800 guesses (1.207 pounds)missed the actual weight (1.198 pounds) by less than 1%! 
+
 
 ***
 
+# Analysis & Results
+
+## Data Loading & Preparation
+
+```{r,warning=F,message=F}
+library(voteR) #devtools::install_github("schliebs/voteR")
+library(magrittr)
+library(extrafont)
 
 
-We create a vector with electoral results
-```{r,warning = FALSE}
-x <- c(33,20.8,9,10,9,13)
-```
+data <- haven::read_spss(file = "data/offline/data_project_700861_2018_02_09 (1).sav") %>% as.data.frame()
+#names(data)
 
-And attribute party names to it
-```{r,warning = FALSE}
-names(x) <- c("CDU","SPD","GRUENE","FDP","LINKE","AFD")
-```
+data %<>% within({
+  
+  erst <- car::recode(v_1,'1 = "Cannata"; 2 = "Horn"; 3 = "Troendle"; 4 = "Enthaltung"; 5 = "Nichtwahl"')
+  zweit <- car::recode(v_2,'1 = "Cannata"; 2 = "Horn"; 3 = "Troendle"; 4 = "Enthaltung"; 5 = "Nichtwahl"')
+  cannata <- v_3
+  troendle <- v_4
+  horn <- v_5
+  enthaltung <- v_6
+  mail <- v_7
+})
 
-Indexing by name
-```{r,warning = FALSE}
-x["AFD"]
-```
+data$id = 1:nrow(data)
 
-Indexing by position
-```{r,warning = FALSE}
-x[2]
-x[1] - x[2]
-```
+data_prog <- 
+  data %>% select(cannata,horn,troendle,enthaltung,mail) %>% 
+  filter((cannata * horn * troendle) != 0)
 
-Select several elements
-```{r,warning = FALSE}
-jamaika <- x[c(1,3,4)]
-sum(jamaika)
-```
-
-Indexing through logical vector
-```{r,warning = FALSE}
-sel <- c(TRUE,TRUE,FALSE,FALSE,FALSE,FALSE)
-x[sel]
-```
+me = data_prog %>% select(1:4)%>% summarise_all(funs(mean(as.numeric(.),na.rm = TRUE))) ;me
+med = data_prog %>% select(1:4)%>% summarise_all(funs(median(as.numeric(.),na.rm = TRUE))) ;med
 
 
-Calculate logical vector
-```{r,warning = FALSE}
-sel <- x > 20
-```
+data_prog <- 
+  data_prog %>% 
+  bind_rows(data.frame(mail = "ZU mean",me)) %>% 
+  bind_rows(data.frame(mail = "ZU median",med)) %>% 
+  bind_rows(data.frame(mail = "Ergebnis",cannata = 100*0.2976*0.92,horn = 100*0.2976*0.92,troendle = 100*0.4048*0.92,enthaltung = 100*0.08))
 
-And use for selection
-```{r,warning = FALSE}
-x[sel]
-```
+resultsmatrix = matrix(rep(c(0.2976*0.92,0.2976*0.92,0.4048*0.92,0.08),nrow(data_prog)),ncol = 4,byrow = TRUE)
+x =(((data_prog[,1:4])/rowSums((data_prog[,1:4]))) - resultsmatrix)
+data_prog$sq = round(rowSums(abs((x*100)^2))/4,4)
+data_prog$abs = round(rowSums(abs((x*100)))/4,4)
 
-Overwrite elements
-```{r,warning = FALSE}
-x[1] <- x[1]-10
-x[2] <- x[2]+10
-x
-```
 
-FPD ? Not available any more...
-```{r,warning = FALSE}
-x[4] <- NA
-x
+
 ```
 
 
-# Loading Packages
 
-Packages are collections of useful functions that fellow nerds wrote and put them online. One of the greatest benefits of R is its extremely rich framework of packages for every kind of use that you can imagine.
+```{r,warning=F,message=F}
 
-At first, we need to load some packages. If you do not have them installed them yet, please do so **once**. You can install a package by running the command `install.packages("NAME")` in R. 
+  
+  
+ 
+  ggplot(data_prog %>% select(-enthaltung) %>% gather(troendle,
+                                                      horn,
+                                                      cannata,
+                                                      key = "candidate",
+                                                      value = "value")) + 
+  geom_density(aes(x = value,color = candidate),size = 1.3) + 
+  geom_vline(xintercept = 27.3792,alpha = 1,col = "red",linetype = "twodash",size = 1.3)+
+  geom_vline(xintercept = 37.2416,col = "blue",linetype = "dotted",size = 1.3)+
+  geom_vline(xintercept = 27.3792,alpha = 0.5,col = "green",linetype = "dashed",size = 1.3)+
+  labs(x = "Stimmanteil",
+       y = "Häufigkeit",
+       title = "Crowd-Forecast vs. Wahlergebnis",
+       subtitle = "Tatsächliches Ergebnis als vertikale Linien",
+       caption = paste0("n = ",nrow(data_prog))) + 
+  hrbrthemes::theme_ipsum(grid= "X")
+  
+  
 
-The most important packages we got to know during the semester were:
 
-Data management
+```
 
-* `plyr`: Plyr is the older (and outdated) brother of tidyverse. We always need to load it once BEFORE (!) the latter in order to avoid nasty conflicts. 
-* `tidyverse`: A very useful collection of tools for data-management. 
-* `magrittr`: Gives us the beautiful Doppelpipe `%<>%`
+```{r,warning=F,message=F}
 
-Data Loading
 
-* `haven` enables us to nicely import .sav or .dta Datasets.
+#### Gewinner
 
-Data Viz
+sub = data_prog %>% arrange(abs) %>% head(8) %>% .[-1,]
 
-* `ggplot2` is the most beautiful shit ever
-* `ggthemes` and `hrbrthemes` make it even more brilliant
-* `extrafont` fixes a problem with fonts for outputting plots to pdf
-* `stargazer` gives us nice regression output tables
+  ggplot2::ggplot(data = sub) +
+  ggplot2::geom_bar(aes(x = reorder(mail,abs),
+                        y = abs),
+                    stat = "identity",
+                    alpha = 0.3,
+                    width = 0.8) + 
+  
+  ggplot2::geom_text(aes(x = reorder(mail,abs) ,
+                         y = abs + 0.2,
+                         label = paste0(round(abs,2))),
+                     stat = "identity",
+                     #  hjust = 0.5,
+                     size = 5,
+                     alpha = 1.0) +
+
+  ggplot2::scale_x_discrete(breaks = c("ZU mean",
+                                       "ZU median",
+                                       "b.thies@zeppelin-university.net",
+                                       "j.meibert@zeppelin-university.net",
+                                       "m.wobith@zeppelin-university.net",
+                                       "p.truckenmueller@zeppelin-university.net",
+                                       "j.volkmann@zeppeln-university.net"),
+                             labels = c("Mean ZU",
+                                        "Median ZU",
+                                        "Ben Thies",
+                                        "Josephine Meibert",
+                                        "M. Wobith",
+                                        "Patricia Truckenmüller",
+                                        "Johannes Volkmann"))+
+  ggplot2::labs(x = NULL,
+                y = "Abweichung",
+                title = "Tippspielergebnis",
+                subtitle = "Durchschnittliche Abweichung vom Endergebnis",
+                caption = NULL) +
+
+  hrbrthemes::theme_ipsum(grid = "none")+
+  ggplot2::theme(legend.position = "none",
+                 axis.text.x = element_text(angle = 90))
+  
+  
+  
+  ######
+  
+
+```
+
+
+```{r,warning=F,message=F}
+
+
+  
+
+sub2 = data_prog %>% arrange(abs) %>% head(50) %>% .[-1,] %>% filter(mail != -99 & mail != -66)
+
+  ggplot2::ggplot(data = sub2) +
+  ggplot2::geom_bar(aes(x = reorder(mail,abs),
+                        y = abs,
+                        fill = mail %in% c("ZU mean","ZU median")),
+                    stat = "identity",
+                    alpha = 0.3,
+                    width = 0.8) + 
+  
+  # ggplot2::geom_text(aes(x = reorder(mail,abs) ,
+  #                        y = abs + 0.2,
+  #                        label = paste0(round(abs,2))),
+  #                    stat = "identity",
+  #                    #  hjust = 0.5,
+  #                    size = 5,
+  #                    alpha = 1.0) +
+  
+  ggplot2::scale_x_discrete(breaks = c("ZU mean",
+                                       "ZU median",
+                                       "b.thies@zeppelin-university.net",
+                                       "j.meibert@zeppelin-university.net",
+                                       "m.wobith@zeppelin-university.net",
+                                       "p.truckenmueller@zeppelin-university.net",
+                                       "j.volkmann@zeppeln-university.net"),
+                            labels = c("Mean ZU",
+                                       "Median ZU",
+                                       "Ben Thies",
+                                       "Josephine Meibert",
+                                       "M. Wobith",
+                                       "Patricia Truckenmüller",
+                                       "Johannes Volkmann"))+
+  ggplot2::labs(x = NULL,
+                y = "Abweichung",
+                title = "Wisdom of the Crowd?",
+                subtitle = "Durchschnittliche Abweichung vom Endergebnis",
+                caption = NULL) +
+  
+  hrbrthemes::theme_ipsum(grid = "none")+
+  ggplot2::theme(legend.position = "none",
+                 axis.text.x = element_text(angle = 90,
+                                            size = 10))
+
+
+  
+
+  
+```
+
+***
+# Appendix: Full R-Code
+
 
