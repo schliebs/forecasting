@@ -1,8 +1,23 @@
 name: "my-website"
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
+output_dir: "docs"
 navbar:
-  title: "My Website"
+  title: "Econometrics with R"
   left:
-    - text: "Home"
+    - text: "Introduction"
       href: index.html
+    - text: "Data Management"
+      href: datamanagement.html
+    - text: "Linear Regression"
+      href: linreg.html
+    - text: "DataViz"
+      href: dataviz.html
+    - text: "Applied Econometrics"
+      href: econometrics.html
     - text: "About"
       href: about.html

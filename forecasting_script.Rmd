@@ -1,0 +1,133 @@
+---
+title: "Wisdom of the croud? - How the mean ZU-ler beat every other ZU-ler in Forecasting the senate winners"
+author: "Marcel Schliebs and Matej Peulic"
+date: "February 21st 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(haven)
+library(plyr)
+library(tidyverse)
+library(ggplot2)
+library(hrbrthemes)
+
+knitr::opts_chunk$set(echo = TRUE)
+
+data <- foreign::read.spss(file = "data/offline/data_project_700861_2018_02_09 (1).sav") %>% as.data.frame()
+
+```
+
+On the morning of the final day of the 2018 senate election [student represenatives elected into the most influential university board], Matej and I were sitting at the FAB Mensa, getting ready for a regular ZU-day (thus hanging around campus, a lot of coffee and long discussions voluntarily preventing you from work). Everything turned out quite different. Both passionate about elections, we started to send around fake polls for the election in some WhatsApp-Groups like it usually is the case during real elections when our party friends get the first exit polls a few hours early. 
+But at some point, we thought? Why fake them as a joke if you can do real ones yourself? So thats what we did, using two different approaches that wil be described at length in the following paragraphs. If you have any questions, feel free to shoot us a message or [tweet](twitter.com/ma_schliebs). 
+***
+
+# Two forecasting models
+
+***
+
+## Survey-Based Exit-Poll 
+
+***
+
+## Herd forecast 
+
+***
+
+# Methodology
+
+***
+
+# Results
+
+***
+
+# Indexing and Data Structure
+
+***
+
+
+
+We create a vector with electoral results
+```{r,warning = FALSE}
+x <- c(33,20.8,9,10,9,13)
+```
+
+And attribute party names to it
+```{r,warning = FALSE}
+names(x) <- c("CDU","SPD","GRUENE","FDP","LINKE","AFD")
+```
+
+Indexing by name
+```{r,warning = FALSE}
+x["AFD"]
+```
+
+Indexing by position
+```{r,warning = FALSE}
+x[2]
+x[1] - x[2]
+```
+
+Select several elements
+```{r,warning = FALSE}
+jamaika <- x[c(1,3,4)]
+sum(jamaika)
+```
+
+Indexing through logical vector
+```{r,warning = FALSE}
+sel <- c(TRUE,TRUE,FALSE,FALSE,FALSE,FALSE)
+x[sel]
+```
+
+
+Calculate logical vector
+```{r,warning = FALSE}
+sel <- x > 20
+```
+
+And use for selection
+```{r,warning = FALSE}
+x[sel]
+```
+
+Overwrite elements
+```{r,warning = FALSE}
+x[1] <- x[1]-10
+x[2] <- x[2]+10
+x
+```
+
+FPD ? Not available any more...
+```{r,warning = FALSE}
+x[4] <- NA
+x
+```
+
+
+# Loading Packages
+
+Packages are collections of useful functions that fellow nerds wrote and put them online. One of the greatest benefits of R is its extremely rich framework of packages for every kind of use that you can imagine.
+
+At first, we need to load some packages. If you do not have them installed them yet, please do so **once**. You can install a package by running the command `install.packages("NAME")` in R. 
+
+The most important packages we got to know during the semester were:
+
+Data management
+
+* `plyr`: Plyr is the older (and outdated) brother of tidyverse. We always need to load it once BEFORE (!) the latter in order to avoid nasty conflicts. 
+* `tidyverse`: A very useful collection of tools for data-management. 
+* `magrittr`: Gives us the beautiful Doppelpipe `%<>%`
+
+Data Loading
+
+* `haven` enables us to nicely import .sav or .dta Datasets.
+
+Data Viz
+
+* `ggplot2` is the most beautiful shit ever
+* `ggthemes` and `hrbrthemes` make it even more brilliant
+* `extrafont` fixes a problem with fonts for outputting plots to pdf
+* `stargazer` gives us nice regression output tables
+

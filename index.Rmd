@@ -1,5 +1,243 @@
 ---
-title: "My Website"
+title: "Econometrics with R"
+author: "Benedikt Fritz & Marcel Schliebs"
+date: "1 Februar 2018"
 ---
 
-Hello, Website!
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+***
+# Hello
+
+Hi everyone from Benedikt and Marcel and welcome to this introductory **Applied Econometrics with R** tutorial. The following paragraphs shall get you familiar with R and hopefully make you full-fledged data scientists in no time. So let's get started. 
+
+hier noch bisschen motivational stuff why R geil ist
+
+
+***
+# Technical Set-Up
+***
+## Installation
+
+Hier Erklärung was was und links R-Studio + R download für windows und mac
+
+***
+## First Steps
+
+Oberfläche erklären. Skript/Concole, usw. Evtl. screenshots
+
+***
+## Working Directories/PROJECTS
+
+ordner erstellen mit projekt
+
+***
+## Packages
+
+was sind packages (sammlungen von funktionen, wie installiere und lade ich blabla)
+
+
+
+***
+# taschenrechneR
+***
+
+***
+### ```# lorem ipsum```
+Comment. Everything behind a hashtag is not run by the program 
+
+```{r}
+1+1 #Hier habe ich eins und eins zusammengezählt
+```	
+  
+***
+### ```y <- x```  
+Attribute x to y
+```{r}
+a <- "hello world"
+a
+```	
+
+
+***
+
+### ```x:y```  
+Generates sequence of ganzzahlen
+```{r}
+1:3
+```	
+
+***
+
+***
+# R algebra
+
+***
+## Classes 
+
+***
+### Vectors
+
+numeric,character,factor
+
+***
+### Matrices
+
+***
+### Data Frames
+
+***
+### Lists
+
+
+***
+## Indexing
+
+### ```x[.]```  
+Indexing of a vector 
+```{r}
+a <- c(1,2,3)
+names(a) <- c("q","r","s")
+a[1]
+a[c(TRUE,TRUE,FALSE)]
+a["s"]
+```	
+
+### ```x[.,.]```  
+Indexing of data.frames (matix)	
+```{r}
+data(iris)
+iris[1,1]
+iris[1:2,1:2]
+iris[1,]
+```	
+
+***
+### ```$```
+data(iris)
+```{r}
+data(iris)
+table(iris$Species)
+```	
+***
+### ```x == y; ; x != y ,x < y; x > y; x <= y; x >= y  ```	
+Logical operators. Return TRUE/FALSE VALUES.
+```{r}
+1 == 2 #Gleichheit
+2 != 3 #Ungleichheit
+2 < 3 #Kleiner
+2 <= 3 #Kleiner gleich
+```	
+vectorisation possible
+***
+```{r}
+1 == c(1,2,3)
+```	
+
+### ```x %in% y```	
+Checks which elements of vector x are included in y
+```{r}
+1:3 %in% 2:4
+```	
+
+***
+
+
+
+***
+# The tidyverse
+Welcome to the tidyverse!
+
+***
+
+### ``` x %>% f(); x %<>% f() {magrittr}```	
+The Pipe operator from the magrittr package pipes the last element of something into the first one of the next.  
+```x %>% f()``` .
+```{r}
+library(magrittr)
+mean(c(1,2,3,5))
+c(1,2,3,5) %>% mean()
+```	
+... and  ```x %<>% f()``` pipes elements and overwrites in the end the initial object with the result of the calculations.
+ ```{r}
+a <- c(1,2,3)
+a
+a %<>% mean()
+a
+```	
+
+***
+### Mutate
+
+***
+### Summarise
+
+***
+### group_by
+
+***
+
+# Useful functions
+
+### ```c()``` 
+Combines elements to a vector
+```{r}
+c(1,2)
+```
+
+
+
+### ```read_spss(){haven}```
+Read spss files via haven  (DIE HIER EHER DATAMANAGEMENT)
+```
+ess <- read_spss(file = "data/ESS7e02_1.sav",
+                 user_na = TRUE)
+```
+
+***
+
+### ```read_dta(){readstata13}``` 
+Read dta files 
+```
+lala <- read_dta(file = "blabla",version = 13)
+```
+
+***
+
+### ```within(data,{befehl})``` 
+Execute r command within data environment. Returns modified dataset.```{}``` make sure that commands are executed across several lines.
+```{r}
+data(iris)
+summary(iris$Sepal.Length)
+iris <- within(iris,{
+  Sepal.Length <- Sepal.Length + 10
+})
+summary(iris$Sepal.Length)
+```
+
+***
+
+### ```table(x)``
+***
+
+### ```prop.table()```
+***
+
+### ```summary(x)```
+***
+
+### ```mean(x)```
+***
+
+### ```sum(x)```
+***
+
+### ```sd(x)```
+***
+
+### ```median(x)```
+
+### ```round(2)```
+
+### ```factor()```
