@@ -1,243 +1,133 @@
 ---
-title: "Econometrics with R"
-author: "Benedikt Fritz & Marcel Schliebs"
-date: "1 Februar 2018"
+title: "Wisdom of the croud? - How the mean ZU-ler beat every other ZU-ler in Forecasting the senate winners"
+author: "Marcel Schliebs and Matej Peulic"
+date: "February 21st 2018"
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
+library(haven)
+library(plyr)
+library(tidyverse)
+library(ggplot2)
+library(hrbrthemes)
+
 knitr::opts_chunk$set(echo = TRUE)
+
+data <- foreign::read.spss(file = "data/offline/data_project_700861_2018_02_09 (1).sav") %>% as.data.frame()
+
 ```
-***
-# Hello
 
-Hi everyone from Benedikt and Marcel and welcome to this introductory **Applied Econometrics with R** tutorial. The following paragraphs shall get you familiar with R and hopefully make you full-fledged data scientists in no time. So let's get started. 
-
-hier noch bisschen motivational stuff why R geil ist
-
-
-***
-# Technical Set-Up
-***
-## Installation
-
-Hier Erklärung was was und links R-Studio + R download für windows und mac
-
-***
-## First Steps
-
-Oberfläche erklären. Skript/Concole, usw. Evtl. screenshots
-
-***
-## Working Directories/PROJECTS
-
-ordner erstellen mit projekt
-
-***
-## Packages
-
-was sind packages (sammlungen von funktionen, wie installiere und lade ich blabla)
-
-
-
-***
-# taschenrechneR
+On the morning of the final day of the 2018 senate election [student represenatives elected into the most influential university board], Matej and I were sitting at the FAB Mensa, getting ready for a regular ZU-day (thus hanging around campus, a lot of coffee and long discussions voluntarily preventing you from work). Everything turned out quite different. Both passionate about elections, we started to send around fake polls for the election in some WhatsApp-Groups like it usually is the case during real elections when our party friends get the first exit polls a few hours early. 
+But at some point, we thought? Why fake them as a joke if you can do real ones yourself? So thats what we did, using two different approaches that wil be described at length in the following paragraphs. If you have any questions, feel free to shoot us a message or [tweet](twitter.com/ma_schliebs). 
 ***
 
-***
-### ```# lorem ipsum```
-Comment. Everything behind a hashtag is not run by the program 
-
-```{r}
-1+1 #Hier habe ich eins und eins zusammengezählt
-```	
-  
-***
-### ```y <- x```  
-Attribute x to y
-```{r}
-a <- "hello world"
-a
-```	
-
+# Two forecasting models
 
 ***
 
-### ```x:y```  
-Generates sequence of ganzzahlen
-```{r}
-1:3
-```	
+## Survey-Based Exit-Poll 
 
 ***
 
-***
-# R algebra
+## Herd forecast 
 
 ***
-## Classes 
+
+# Methodology
 
 ***
-### Vectors
 
-numeric,character,factor
-
-***
-### Matrices
+# Results
 
 ***
-### Data Frames
 
-***
-### Lists
-
-
-***
-## Indexing
-
-### ```x[.]```  
-Indexing of a vector 
-```{r}
-a <- c(1,2,3)
-names(a) <- c("q","r","s")
-a[1]
-a[c(TRUE,TRUE,FALSE)]
-a["s"]
-```	
-
-### ```x[.,.]```  
-Indexing of data.frames (matix)	
-```{r}
-data(iris)
-iris[1,1]
-iris[1:2,1:2]
-iris[1,]
-```	
-
-***
-### ```$```
-data(iris)
-```{r}
-data(iris)
-table(iris$Species)
-```	
-***
-### ```x == y; ; x != y ,x < y; x > y; x <= y; x >= y  ```	
-Logical operators. Return TRUE/FALSE VALUES.
-```{r}
-1 == 2 #Gleichheit
-2 != 3 #Ungleichheit
-2 < 3 #Kleiner
-2 <= 3 #Kleiner gleich
-```	
-vectorisation possible
-***
-```{r}
-1 == c(1,2,3)
-```	
-
-### ```x %in% y```	
-Checks which elements of vector x are included in y
-```{r}
-1:3 %in% 2:4
-```	
+# Indexing and Data Structure
 
 ***
 
 
 
-***
-# The tidyverse
-Welcome to the tidyverse!
+We create a vector with electoral results
+```{r,warning = FALSE}
+x <- c(33,20.8,9,10,9,13)
+```
 
-***
+And attribute party names to it
+```{r,warning = FALSE}
+names(x) <- c("CDU","SPD","GRUENE","FDP","LINKE","AFD")
+```
 
-### ``` x %>% f(); x %<>% f() {magrittr}```	
-The Pipe operator from the magrittr package pipes the last element of something into the first one of the next.  
-```x %>% f()``` .
-```{r}
-library(magrittr)
-mean(c(1,2,3,5))
-c(1,2,3,5) %>% mean()
-```	
-... and  ```x %<>% f()``` pipes elements and overwrites in the end the initial object with the result of the calculations.
- ```{r}
-a <- c(1,2,3)
-a
-a %<>% mean()
-a
-```	
+Indexing by name
+```{r,warning = FALSE}
+x["AFD"]
+```
 
-***
-### Mutate
+Indexing by position
+```{r,warning = FALSE}
+x[2]
+x[1] - x[2]
+```
 
-***
-### Summarise
+Select several elements
+```{r,warning = FALSE}
+jamaika <- x[c(1,3,4)]
+sum(jamaika)
+```
 
-***
-### group_by
-
-***
-
-# Useful functions
-
-### ```c()``` 
-Combines elements to a vector
-```{r}
-c(1,2)
+Indexing through logical vector
+```{r,warning = FALSE}
+sel <- c(TRUE,TRUE,FALSE,FALSE,FALSE,FALSE)
+x[sel]
 ```
 
 
-
-### ```read_spss(){haven}```
-Read spss files via haven  (DIE HIER EHER DATAMANAGEMENT)
-```
-ess <- read_spss(file = "data/ESS7e02_1.sav",
-                 user_na = TRUE)
+Calculate logical vector
+```{r,warning = FALSE}
+sel <- x > 20
 ```
 
-***
-
-### ```read_dta(){readstata13}``` 
-Read dta files 
-```
-lala <- read_dta(file = "blabla",version = 13)
+And use for selection
+```{r,warning = FALSE}
+x[sel]
 ```
 
-***
-
-### ```within(data,{befehl})``` 
-Execute r command within data environment. Returns modified dataset.```{}``` make sure that commands are executed across several lines.
-```{r}
-data(iris)
-summary(iris$Sepal.Length)
-iris <- within(iris,{
-  Sepal.Length <- Sepal.Length + 10
-})
-summary(iris$Sepal.Length)
+Overwrite elements
+```{r,warning = FALSE}
+x[1] <- x[1]-10
+x[2] <- x[2]+10
+x
 ```
 
-***
+FPD ? Not available any more...
+```{r,warning = FALSE}
+x[4] <- NA
+x
+```
 
-### ```table(x)``
-***
 
-### ```prop.table()```
-***
+# Loading Packages
 
-### ```summary(x)```
-***
+Packages are collections of useful functions that fellow nerds wrote and put them online. One of the greatest benefits of R is its extremely rich framework of packages for every kind of use that you can imagine.
 
-### ```mean(x)```
-***
+At first, we need to load some packages. If you do not have them installed them yet, please do so **once**. You can install a package by running the command `install.packages("NAME")` in R. 
 
-### ```sum(x)```
-***
+The most important packages we got to know during the semester were:
 
-### ```sd(x)```
-***
+Data management
 
-### ```median(x)```
+* `plyr`: Plyr is the older (and outdated) brother of tidyverse. We always need to load it once BEFORE (!) the latter in order to avoid nasty conflicts. 
+* `tidyverse`: A very useful collection of tools for data-management. 
+* `magrittr`: Gives us the beautiful Doppelpipe `%<>%`
 
-### ```round(2)```
+Data Loading
 
-### ```factor()```
+* `haven` enables us to nicely import .sav or .dta Datasets.
+
+Data Viz
+
+* `ggplot2` is the most beautiful shit ever
+* `ggthemes` and `hrbrthemes` make it even more brilliant
+* `extrafont` fixes a problem with fonts for outputting plots to pdf
+* `stargazer` gives us nice regression output tables
+

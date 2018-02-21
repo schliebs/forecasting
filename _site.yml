@@ -1,4 +1,4 @@
-name: "my-website"
+name: "Senate"
 output:
   html_document:
     toc: true
@@ -7,17 +7,7 @@ output:
       smooth_scroll: true
 output_dir: "docs"
 navbar:
-  title: "Econometrics with R"
+  title: "Forecasting the Senate Election"
   left:
-    - text: "Introduction"
+    - text: "Methodology & Results"
       href: index.html
-    - text: "Data Management"
-      href: datamanagement.html
-    - text: "Linear Regression"
-      href: linreg.html
-    - text: "DataViz"
-      href: dataviz.html
-    - text: "Applied Econometrics"
-      href: econometrics.html
-    - text: "About"
-      href: about.html
