@@ -298,36 +298,71 @@ div.tocify {
 
 <hr />
 <hr />
-<p>On the morning of the final day of the 2018 senate election [student represenatives elected into the most influential university board], Matej and I were sitting at the FAB Mensa, getting ready for a regular ZU-day (thus hanging around campus, a lot of coffee and long discussions voluntarily preventing you from work). Everything turned out quite different. Both passionate about elections, we started to send around fake polls for the election in some WhatsApp-Groups like it usually is the case during real elections when our party friends get the first exit polls a few hours early. But at some point, we thought? Why fake them as a joke if you can do real ones yourself? So thats what we did, using two different approaches that wil be described in detail in the following paragraphs. If you have any questions, feel free to shoot us a message or <a href="twitter.com/ma_schliebs">tweet</a>. ***</p>
+<p>On the morning of the final day of the 2018 senate election [student represenatives elected into the most influential university board], Matej and I were sitting at the FAB Mensa, getting ready for a regular ZU-day (thus hanging around campus, a lot of coffee and long discussions voluntarily preventing you from work). Everything turned out quite different. Both passionate about elections, we started to send around fake polls for the election in some WhatsApp-Groups like it usually is the case during real elections when our party friends get the first exit polls a few hours early. But at some point, we thought? Why fake them as a joke if you can do real ones yourself? So thats what we did, using two different approaches that wil be described in detail in the following paragraphs. If you have any questions, feel free to shoot us a message or <a href="twitter.com/ma_schliebs">tweet</a>.</p>
 <div id="methodology" class="section level1">
 <h1><span class="header-section-number">1</span> Methodology</h1>
 <p>When we decided we wanted to give it a shot at forecasting, we intuitively started walking around in the FAB Mensa and asking people who they had casted their two votes for. After a few minutes however, we started to wonder: Are people walking around Uni at a carneval Friday (thus a rather empty FAB) really representative of the average ZU-ler? This is important since polling or sampling in general is based on the (often brave) assumption that every individual in the target population has an equal chance of being selected for the sample. In our case, there were several indicators that spoke against this. To give you one example, 7th and 5th semester candidates Moritz and Clemens probably have many friends who are abroad right now (and thus allowed to vote electronically but of course not walking through FAB).</p>
-<p>This when we had the idea to try out to give <em>wisdom of the crowd</em> a chance. The wisdom of the crowd is a phenomenon that recently has attracted some attention in forecasting and is based on the principle that collective judgements perform very well because they contain many individual judgements that cancel each other out. I actually discovered this phenomenon myself when I got lost on Lake Constance together with a friend a few years ago. “Lost” in that context actually meant that my sail boat’s engine broke with almost now wind in front of the harbour entrance of Romanshorn which is about 11-12 kilometers away from the SMH. Because it was already late, we started to wonder what time it was (smartly, we didn’t bring no watch or phone) and consequently if we would make it back home before darkness. Long story short, we didn’t. But what didn’t let me rest was the thought whether it would increase the accuracy of our time estimate if we averaged my friend’s and my individual time guesses instead of just taking one random judgement [not knowing who of us was the better guesser]. Say, for example, it really was 17.00 and her guess was 16.30. There are now two options:</p>
+<p>This when we had the idea to try out to give <em>wisdom of the crowd</em> a chance. The wisdom of the crowd is a phenomenon that recently has attracted some attention in forecasting and is based on the principle that collective judgements perform very well because they contain many individual judgements that cancel each other out. I actually discovered this phenomenon myself when I got lost on Lake Constance together with a friend a few years ago. “Lost” in that context actually meant that my sail boat’s engine broke with almost now wind in front of the harbour entrance of Romanshorn which is about 11-12 kilometers away from the SMH. Because it was already late(like 4 or 5), we started to wonder what time it was (smartly, we didn’t bring no watch or phone) and consequently if we would make it back home before darkness. Long story short, we didn’t. But what didn’t let me rest was the thought whether it would increase the accuracy of our time estimate if we averaged my friend’s and my individual time guesses instead of just taking one random judgement [not knowing who of us was the better guesser]. Say, for example, it really was 17.00 and her guess was 16.30. There are now two options:</p>
 <p><em>A) My estimate is 17.00 or earlier.</em><br />
 <em>B) My estimate is 17.00 or later.</em></p>
-<p>The expected guessing error <span class="math inline">\(g_{guess}\)</span> for asking a random person of us thus is: ***</p>
+<p>The expected guessing error <span class="math inline">\(g_{guess}\)</span> for asking a random person of us thus is:</p>
 <span class="math display">\[\begin{equation}
 e_{random guess} = abs(\frac{1}{2} * (17.00-guess_1)   +  \frac{1}{2}*(17.00-guess_2))
-(\#eq:1)
+(\#equation:1.1)
 \end{equation}\]</span>
 <hr />
-<p>At the same time, averaging our guesses leads to: ***</p>
+<p>At the same time, averaging our guesses leads to:</p>
 <span class="math display">\[\begin{equation}
 e_{averaged guess} = abs( 17.00 - (\frac{guess_1 + guess_2}{2}))
-(\#eq:2)
+(\#equation:1.2)
 \end{equation}\]</span>
 <hr />
 We can now rewrite <code>equation 1.1</code> as follows:
 <span class="math display">\[\begin{equation}
 e_{random guess} = abs(\frac{17.00-guess_1 + 17.00 - guess_2}{2})
-(\#eq:3)
+(\#equation:1.3)
 \end{equation}\]</span>
 <hr />
 <p>If we look at equations <em>1.2.(averaged guess)</em> and <em>1.3(rewritten random guess)</em>, we can see that the two estimators are identical <strong>if and only if</strong> both guesses are off in the same direction (thus <span class="math inline">\(17.00-guess_1\)</span> and <span class="math inline">\(17.00-guess_2\)</span> have the same sign). If not equation 1.2 yields a lower guess error than 1.1/1.3.</p>
 <hr />
 <p>To illustrate this with our lake-lost-example, say my friend’s guess was 16.30 while it really is 17.00. If now I am off in the same direction and guess 16.50, both averaging and randomly selecting produce an (average) estimate of 16.40 and thus the average accuracy does not change at all.<br />
-If however, I was of in another direction and guessed 17.20, for example, a random guess of one of us would produce an average accuracy of <span class="math inline">\(0.5*30 min + 0.5 * 20 min = 25 min\)</span>, while averaging the guesses would produce an accuracy of $17.00 - ({16.30 + 17.20}{2}) $ =&gt; $17.00 - 16.55 = 5 min $.<br />
-We thus see that nothing changes if we are both off in the same direction but we gain a lot if we are off in opposite directions. So we can sometimes win but never lose, which definitely makes it a good bet. *** Last but not least, let’s look at this graphically:</p>
+If however, I was of in another direction and guessed 17.20, for example, a random guess of one of us would produce an average accuracy of <span class="math inline">\(0.5*30 min + 0.5 * 20 min = 25 min\)</span>, while averaging the guesses leads to an accuracy of 17.00 - (16.30 + 17.20)/2 and thus 17.00 - 16.55 = 5 min.<br />
+We thus see that nothing changes if we are both off in the same direction but we gain a lot if we are off in opposite directions. So we can sometimes win but never lose, which definitely makes it a good bet. Last but not least, let’s look at this graphically:</p>
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>We clearly see that whenever our guesses are off in the same direction, there is no difference between the methods. Whenever our guesses are off in the opposite direction however, the averaging (red) estimator clearly performs much better, with the best performance being located at wherever her forecast error is exactly -1* mine, which cancels out all error.</p>
+<p>As I later found out, this is of course no new thing that I discovered but had already been applied by Sir Francis Galton more than 100 years ago, when he accidently found out that while individual guesses in a competition in ox-weight-guessing were all widely off, the average of 800 guesses (1.207 pounds)missed the actual weight (1.198 pounds) by less than 1%!</p>
+</div>
+<div id="analysis-results" class="section level1">
+<h1><span class="header-section-number">2</span> Analysis &amp; Results</h1>
+<p>We created our forecast by averaging about 50 individual forecasts and calculating the mean and median forecast. Those result in the following estimates:</p>
+<pre><code>## [1] &quot;Mean forecast&quot;</code></pre>
+<pre><code>##    cannata    horn troendle enthaltung
+## 1 30.08333 25.9375 34.54167     9.4375</code></pre>
+<pre><code>## [1] &quot;Median forecast&quot;</code></pre>
+<pre><code>##   cannata horn troendle enthaltung
+## 1    30.5   25       35          5</code></pre>
+<p>Compared with the actual result (Cannata + Horn 27.4; Troendle 37.2, Enthaltung 8), we see that both the slightly overestimated Cannata’s chances while underestimating Horn. Globally, this leads to a mean forecast error of 2.07 (Mean) and 2.27 (Median).</p>
+<p>The forecast density plot confirms the success of the Median and Mean estimates and reveals some more nuances: While the majority of Troendle-guesses turned out to be very precise, both the Horn and Cannata forecasts were (asymmetrically) split into a larger part being slightly off and a smaller part tilting the distribution towards the (centrally located) actual result.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>We can now compare the global forecast densities to the best inidividual forecast submitted by Ben Thies. These are highlighted by the solid lines in the plot below. We see that he hit very close to the modally (most frequently) guessed score, but rarely loses to the aggregated forecast due to the above described smaller part in the aggregate that rated Horn higher and Cannata a little lower.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre><code>##    cannata    horn troendle enthaltung       mail      sq    abs
+## 2 30.08333 25.9375 34.54167     9.4375    ZU mean  4.6867 2.0708
+## 3 30.50000 25.0000 35.00000     5.0000  ZU median  7.5527 2.2790
+## 4 31.00000 24.0000 36.00000     9.0000 b.thies@ze  6.7677 2.3104
+## 5 27.00000 33.0000 35.00000     5.0000 j.meibert@ 11.4405 2.8104
+## 6 27.00000 29.0000 31.00000    13.0000 m.wobith@z 16.6821 3.3104
+## 7 34.00000 22.0000 36.00000     8.0000 p.truckenm 18.5781 3.3104
+## 8 32.00000 29.0000 38.00000     1.0000 j.volkmann 18.3885 3.5000</code></pre>
+<p>An examination of the individual forecasts shows that some individuals came close to estimating the right score. Noteworthy is that Johannes Volkmann submitted a very accurate estimate of the candidates’ vote distribution but screwed up his (potentially global) victory by screwing up the Enthaltungs-score. Anyways, congrats to all participants, everyone in this list deserved a coffee and piece of cake soon &lt;3</p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>We are now ready to conclude with a big Thank you to everyone who participated! For fellow nerds, the full R code as well as an extensive try to statistically generalize the findings for different guessing distributions can be found in the appendix. If you found any mistakes (very likely!) or are further interested in the topic, feel free to shoot us a message.</p>
+<p>Cheers Marcel und Matej</p>
+<hr />
+</div>
+<div id="appendix-1-full-r-code" class="section level1">
+<h1><span class="header-section-number">3</span> Appendix 1: Full R-Code</h1>
 <pre class="r"><code>library(tidyverse)
 library(ggplot2)
 library(hrbrthemes)
@@ -351,13 +386,6 @@ ggplot(data = data) +
        title = &quot;Wisdom of the crowd&quot;,
        subtitle = &quot;Average is never more inaccurate&quot;) + 
   theme_ipsum(grid = &quot;Y&quot;)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" width="672" /> We clearly see that whenever our guesses are off in the same direction, there is no difference between the methods. Whenever our guesses are off in the opposite direction however, the averaging (red) estimator clearly performs much better, with the best performance being located at wherever her forecast error is exactly -1* mine, which cancels out all error. *** As I later found out, this is of course no new thing that I discovered but had already been applied by Sir Francis Galton more than 100 years ago, when he accidently found out that while individual guesses in a competition in ox-weight-guessing were all widely off, the average of 800 guesses (1.207 pounds)missed the actual weight (1.198 pounds) by less than 1%!</p>
-<hr />
-</div>
-<div id="analysis-results" class="section level1">
-<h1><span class="header-section-number">2</span> Analysis &amp; Results</h1>
-<div id="data-loading-preparation" class="section level2">
-<h2><span class="header-section-number">2.1</span> Data Loading &amp; Preparation</h2>
 <pre class="r"><code>library(voteR) #devtools::install_github(&quot;schliebs/voteR&quot;)
 library(magrittr)
 library(extrafont)
@@ -383,13 +411,11 @@ data_prog &lt;-
   data %&gt;% select(cannata,horn,troendle,enthaltung,mail) %&gt;% 
   filter((cannata * horn * troendle) != 0)
 
-me = data_prog %&gt;% select(1:4)%&gt;% summarise_all(funs(mean(as.numeric(.),na.rm = TRUE))) ;me</code></pre>
-<pre><code>##    cannata    horn troendle enthaltung
-## 1 30.08333 25.9375 34.54167     9.4375</code></pre>
-<pre class="r"><code>med = data_prog %&gt;% select(1:4)%&gt;% summarise_all(funs(median(as.numeric(.),na.rm = TRUE))) ;med</code></pre>
-<pre><code>##   cannata horn troendle enthaltung
-## 1    30.5   25       35          5</code></pre>
-<pre class="r"><code>data_prog &lt;- 
+me = data_prog %&gt;% select(1:4)%&gt;% summarise_all(funs(mean(as.numeric(.),na.rm = TRUE))) ;me
+med = data_prog %&gt;% select(1:4)%&gt;% summarise_all(funs(median(as.numeric(.),na.rm = TRUE))) ;med
+
+
+data_prog &lt;- 
   data_prog %&gt;% 
   bind_rows(data.frame(mail = &quot;ZU mean&quot;,me)) %&gt;% 
   bind_rows(data.frame(mail = &quot;ZU median&quot;,med)) %&gt;% 
@@ -414,10 +440,29 @@ data_prog$abs = round(rowSums(abs((x*100)))/4,4)</code></pre>
        subtitle = &quot;Tatsächliches Ergebnis als vertikale Linien&quot;,
        caption = paste0(&quot;n = &quot;,nrow(data_prog))) + 
   hrbrthemes::theme_ipsum(grid= &quot;X&quot;)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<pre class="r"><code>#### Gewinner
+<pre class="r"><code>  ggplot(data_prog %&gt;% select(-enthaltung) %&gt;% gather(troendle,
+                                                      horn,
+                                                      cannata,
+                                                      key = &quot;candidate&quot;,
+                                                      value = &quot;value&quot;)) + 
+  geom_density(aes(x = value,color = candidate),size = 1.3) + 
+  geom_vline(xintercept = 27.3792,alpha = 1,col = &quot;red&quot;,linetype = &quot;twodash&quot;,size = 1.3)+
+  geom_vline(xintercept = 37.2416,col = &quot;blue&quot;,linetype = &quot;dotted&quot;,size = 1.3)+
+  geom_vline(xintercept = 27.3792,alpha = 0.5,col = &quot;green&quot;,linetype = &quot;dashed&quot;,size = 1.3)+
+  geom_vline(xintercept = 31,alpha = 0.5,col = &quot;red&quot;,linetype = &quot;solid&quot;,size = 1.5)+
+  geom_vline(xintercept = 24,alpha = 0.5,col = &quot;green&quot;,linetype = &quot;solid&quot;,size = 1.5)+
+  geom_vline(xintercept = 36,alpha = 0.5,col = &quot;blue&quot;,linetype = &quot;solid&quot;,size = 1.5)+
 
+
+  labs(x = &quot;Stimmanteil&quot;,
+       y = &quot;Häufigkeit&quot;,
+       title = &quot;Crowd-Forecast vs. Wahlergebnis&quot;,
+       subtitle = &quot;Durchgezogener Vertikallinien: Siegertipp Ben Thies&quot;,
+       caption = &quot;Tatsächliches Ergebnis als gestrichelte Linien&quot;) + 
+  hrbrthemes::theme_ipsum(grid= &quot;X&quot;)</code></pre>
+<pre class="r"><code>#### Gewinner
 sub = data_prog %&gt;% arrange(abs) %&gt;% head(8) %&gt;% .[-1,]
+sub
 
   ggplot2::ggplot(data = sub) +
   ggplot2::geom_bar(aes(x = reorder(mail,abs),
@@ -456,9 +501,11 @@ sub = data_prog %&gt;% arrange(abs) %&gt;% head(8) %&gt;% .[-1,]
 
   hrbrthemes::theme_ipsum(grid = &quot;none&quot;)+
   ggplot2::theme(legend.position = &quot;none&quot;,
-                 axis.text.x = element_text(angle = 90))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<pre class="r"><code>  ######</code></pre>
+                 axis.text.x = element_text(angle = 90))
+  
+  
+  
+  ######</code></pre>
 <pre class="r"><code>sub2 = data_prog %&gt;% arrange(abs) %&gt;% head(50) %&gt;% .[-1,] %&gt;% filter(mail != -99 &amp; mail != -66)
 
   ggplot2::ggplot(data = sub2) +
@@ -501,12 +548,73 @@ sub = data_prog %&gt;% arrange(abs) %&gt;% head(8) %&gt;% .[-1,]
   ggplot2::theme(legend.position = &quot;none&quot;,
                  axis.text.x = element_text(angle = 90,
                                             size = 10))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<hr />
 </div>
-</div>
-<div id="appendix-full-r-code" class="section level1">
-<h1><span class="header-section-number">3</span> Appendix: Full R-Code</h1>
+<div id="appendix-2-mathematical-generalization" class="section level1">
+<h1><span class="header-section-number">4</span> Appendix 2: Mathematical Generalization</h1>
+<p>This part is still very rudimentary since I just don’t have the time to neatly write it down right now. In principal, I simulate two distributions. The first one is a normal distribution with n1 = 10000, m1 = 0 and sd1 = 2. The second one is simulated for a set of various values: The standard deviation (thus proxy for precision) of the second distribution ranges from factor 0 to 3 of the first one, while the correlation between the two distributions is simulated with correlations between -1 and 1.</p>
+<pre class="r"><code>library(ggplot2)
+n1 = 10000
+m1 = 0
+s1 = 2
+d1 &lt;- rnorm(n = n1,mean = m1,sd = s1)
+
+# ggplot() + 
+#   geom_density(aes(d1))
+
+
+results_df &lt;- data.frame()
+
+for(sfactor in seq(0,3,0.2)){
+  for(corr_factor in seq(-1,1,0.1)){
+  
+    n1 = 10000
+    m1 = 0
+    s1 = 2
+    d1 &lt;- rnorm(n = n1,mean = m1,sd = s1)
+    
+    n2 = 10000
+    m2 = 0
+    s2 = s1*sfactor
+    d2 &lt;- corr_factor*d1 + (1-corr_factor)*rnorm(n = n2,mean = m2,sd = s2)
+    
+    d3 &lt;- data.frame(d1,d2) %&gt;% rowMeans()
+    
+    mean_errors &lt;- 
+      data.frame(d1,d2,d3) %&gt;% 
+      summarise_all(funs(mean(abs(.))))
+    
+    
+    results_df &lt;- 
+      bind_rows(results_df,
+                data.frame(sfactor,
+                           corr_factor,
+                           corr = cor(d1,d2),
+                           error1 = mean_errors$d1,
+                           error2 = mean_errors$d2,
+                           error_combined = mean_errors$d3,
+                           improvement = mean_errors$d1 - mean_errors$d3))
+    
+  }
+}
+#results_df
+
+#summary(mod1 &lt;- lm(improvement ~ relevel(factor(sfactor),ref= &quot;2&quot;) * corr ,data = results_df))</code></pre>
+<p>We then access if a (weighted) averaging of the distributions improves the forecast against the first distribution only, we see that an improvement (horizontal value above zero/the x-axis) is reached for all correlations if the standard deviation of the second distribution is equal or smaller than the first, while the highest improvements are reached if the second distribution is rather precise but especially the correlations are of negative nature.</p>
+<pre class="r"><code>ggplot(data = results_df,
+       aes(x = corr,
+           y = improvement,
+           color = factor(sfactor))) + 
+  geom_point() + 
+  geom_line()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>The same holds if we regard this plot inverseley with the relative standard deviation on the x-axis and the correlation as a coloured indicator. More on this is to follow soon.</p>
+<pre class="r"><code>ggplot(data = results_df,
+       aes(x = sfactor,
+           y = improvement,
+           color = corr)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 </div>
 
 
