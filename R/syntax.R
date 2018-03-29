@@ -32,6 +32,14 @@ data_on <-
          value = "candidate",erst,zweit) %>% 
   mutate(type = "online")
 
+data_on2 <- 
+  data %>% 
+  select(erst,zweit,cannata,troendle,horn,enthaltung,mail) %>% 
+  mutate(type = "online") %>% as.data.frame()# %>% as.matrix()
+
+table(erst = data_on2$erst,zweit = data_on2$zweit)
+
+
 # Online Only
 data_on$candidate %>% table() %>% prop.table()
 
@@ -353,3 +361,5 @@ ggsave(filename = "sample2.png",
        width = 10,
        height = 6,device = "png",dpi = 500)
 
+
+data

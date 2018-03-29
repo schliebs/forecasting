@@ -12,7 +12,7 @@
 <meta name="author" content="Marcel Schliebs and Matej Peulic" />
 
 
-<title>Wisdom of the croud? - How the mean ZU-ler beat every other ZU-ler in Forecasting the senate winners</title>
+<title>Wisdom of the crowd? - How the mean ZU-ler beat every other ZU-ler in Forecasting the senate winners</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -24,8 +24,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -34,10 +34,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -289,7 +291,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Wisdom of the croud? - How the mean ZU-ler beat every other ZU-ler in Forecasting the senate winners</h1>
+<h1 class="title toc-ignore">Wisdom of the crowd? - How the mean ZU-ler beat every other ZU-ler in Forecasting the senate winners</h1>
 <h4 class="author"><em>Marcel Schliebs and Matej Peulic</em></h4>
 <h4 class="date"><em>February 21st 2018</em></h4>
 

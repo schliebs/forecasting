@@ -1,5 +1,5 @@
 ---
-title: "Wisdom of the croud? - How the mean ZU-ler beat every other ZU-ler in Forecasting the senate winners"
+title: "Wisdom of the crowd? - How the mean ZU-ler beat every other ZU-ler in Forecasting the senate winners"
 author: "Marcel Schliebs and Matej Peulic"
 date: "February 21st 2018"
 output: html_document
